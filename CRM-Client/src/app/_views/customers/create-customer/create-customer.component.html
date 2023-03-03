@@ -1,0 +1,90 @@
+<form class="my-3" [formGroup]="customerForm" (ngSubmit)="customerForm.valid && formSubmition()">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <input type="radio" formControlName="status" id="active" [value]="true">
+                            <label class="form-check-label ms-1" for="active">Active</label>
+                            
+                            <input type="radio" class="ms-5" formControlName="status" id="inactive" [value]="false">
+                            <label class="form-check-label ms-1" for="inactive">InActive</label>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="code" class="form-label">Code</label>
+                            <input type="text" class="form-control" id="code" formControlName="code">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="firstName" formControlName="firstName">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="lastName" formControlName="lastName">
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" formControlName="email">
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input type="tel" class="form-control" id="phone" formControlName="phone">
+                        </div>
+                        <div class="col-md-12">
+                            <hr>
+                            <button class="btn btn-primary btn-sm" [disabled]="customerForm.invalid" type="submit">Create new customer</button>            
+                        </div>
+                    </div>    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <ng-container formArrayName="addresses">
+                <ng-container *ngFor="let addressForm of addresses.controls; let i = index">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row" [formGroupName]="i">
+                                <div class="col-md-12 mb-3">
+                                    <button class="btn btn-danger btn-sm" (click)="removeAddress(i)">Remove</button>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="line1" class="form-label">Line1</label>
+                                    <input type="text" class="form-control" id="line1" formControlName="line1">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="line2" class="form-label">Line2</label>
+                                    <input type="text" class="form-control" id="line2" formControlName="line2">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="postalCode" class="form-label">Postal Code</label>
+                                    <input type="text" class="form-control" id="postalCode" formControlName="postalCode">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="country" class="form-label">Country</label>
+                                    <input type="text" class="form-control" id="country" formControlName="country">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="city" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="city" formControlName="city">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="state" class="form-label">State</label>
+                                    <input type="text" class="form-control" id="state" formControlName="state">
+                                </div>
+                                <div class="col-md-12">
+                                    <input type="radio" formControlName="addressType" [id]="'shippingAddress'+i" value="shipping">
+                                    <label class="form-check-label ms-1" [for]="'shippingAddress'+i">Shipping Address</label>
+                                    
+                                    <input type="radio" class="ms-5" formControlName="addressType" [id]="'billingAddress'+i" value="billing">
+                                    <label class="form-check-label ms-1" [for]="'billingAddress'+i">Billing Address</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+            <button type="button" (click)="addAddress()" class="btn btn-success btn-sm">New address</button>
+        </div>
+    </div>
+</form>

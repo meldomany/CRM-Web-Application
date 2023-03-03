@@ -1,0 +1,30 @@
+<button class="btn btn-primary btn-sm my-3" [routerLink]="['/orders/create']">Create new Order</button>
+<table class="table table-hover" *ngIf="orders && orders.length > 0">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Status</th>
+        <th scope="col">Tax</th>
+        <th scope="col">Sub Total</th>
+        <th scope="col">Grand Total</th>
+        <th scope="col">Date</th>        
+        <th scope="col">Control</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <th scope="row">{{ order.id }}</th>
+        <td>{{ (order.status == true) ? 'Active' : 'Canceled' }}</td>
+        <td>{{ order.tax }}</td>
+        <td>{{ order.subTotal }}</td>
+        <td>{{ order.grandTotal }}</td>
+        <td>{{ order.date }}</td>
+        <td>
+            <button class="btn btn-secondary btn-sm" [routerLink]="['/orders/edit', order.id]">Edit</button>
+        </td>
+      </tr>
+    </tbody>
+</table>
+<ng-container *ngIf="orders.length == 0">
+  <h3 class="text-muted text-center">No orders found</h3>
+</ng-container>

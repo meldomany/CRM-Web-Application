@@ -1,0 +1,20 @@
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card mt-5">
+            <div class="card-body">
+                <form [formGroup]="loginForm" (ngSubmit)="loginForm.valid && loginFormSubmition()">
+                    <div class="mb-3">
+                      <label for="email" class="form-label">Email address</label>
+                      <input type="email" formControlName="email" class="form-control" id="email" aria-describedby="emailHelp">
+                      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="password" class="form-label">Password</label>
+                      <input type="password" formControlName="password" class="form-control" id="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>    
+</div>

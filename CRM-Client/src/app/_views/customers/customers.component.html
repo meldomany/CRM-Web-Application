@@ -1,0 +1,31 @@
+<button class="btn btn-primary btn-sm my-3" [routerLink]="['/customers/create']"><i class="fa fa-user"></i>Create new customer</button>
+<table class="table table-hover" *ngIf="customers && customers.length > 0">
+    <thead>
+      <tr>
+        <th scope="col">Code</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Active</th>
+        <th scope="col">Control</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of customers">
+        <th scope="row">{{ customer.code }}</th>
+        <td>{{ customer.firstName }}</td>
+        <td>{{ customer.lastName }}</td>
+        <td>{{ customer.email }}</td>
+        <td>{{ customer.phone }}</td>
+        <td>{{ customer.status }}</td>
+        <td>
+            <button class="btn btn-secondary btn-sm" [routerLink]="['/customers/edit', customer.code]">Edit</button>
+        </td>
+      </tr>
+    </tbody>
+</table>
+
+<ng-container *ngIf="customers.length == 0">
+  <h3 class="text-muted text-center">No customers found</h3>
+</ng-container>

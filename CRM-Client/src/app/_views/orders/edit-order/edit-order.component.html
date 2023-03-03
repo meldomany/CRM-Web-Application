@@ -1,0 +1,105 @@
+<form class="my-3" [formGroup]="orderForm" (ngSubmit)="orderForm.valid && orderFormSubmition()">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <input type="radio" formControlName="status" id="cancel" [value]="false">
+                            <label class="form-check-label ms-1" for="cancel">Cancel</label>
+                            
+                            <input type="radio" class="ms-5" formControlName="status" id="active" [value]="true">
+                            <label class="form-check-label ms-1" for="active">Active</label>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="tax" class="form-label">Tax</label>
+                            <input type="number" class="form-control" id="tax" formControlName="tax" readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="subTotal" class="form-label">Sub Total</label>
+                            <input type="number" class="form-control" id="subTotal" formControlName="subTotal" readonly>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="grandTotal" class="form-label">Grand Total</label>
+                            <input type="number" class="form-control" id="grandTotal" formControlName="grandTotal" readonly>
+                        </div>
+                        <!-- <div class="col-md-12 mb-3">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="date" formControlName="date">
+                        </div> -->
+                        <div class="col-md-12 mb-3">
+                            <label for="customerId" class="form-label">Customer</label>
+                            <select class="form-control" id="customerId" formControlName="customerId" (change)="customerSelected()">
+                                <option *ngFor="let customer of customers" [value]="customer.id">
+                                    {{ customer.code }} : {{ customer.firstName }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 mb-3" *ngIf="customerShippingAddresses">
+                            <label for="shippingAddressId" class="form-label">Shipping Address</label>
+                            <select class="form-control" id="shippingAddressId" formControlName="shippingAddressId" (change)="customerSelected()">
+                                <option *ngFor="let shippingAddress of customerShippingAddresses" [value]="shippingAddress.id">
+                                    {{ shippingAddress.line1 }} : {{ shippingAddress.country }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 mb-3" *ngIf="customerBillingAddresses">
+                            <label for="billingAddressId" class="form-label">Billing Address</label>
+                            <select class="form-control" id="billingAddressId" formControlName="billingAddressId" (change)="customerSelected()">
+                                <option *ngFor="let billingAddress of customerBillingAddresses" [value]="billingAddress.id">
+                                    {{ billingAddress.line1 }} : {{ billingAddress.country }}
+                                </option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary btn-sm" [disabled]="orderForm.invalid" type="submit">Update</button>            
+                    </div>    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <ng-container formArrayName="orderDetails">
+                <ng-container *ngFor="let orderDetailForm of orderDetails.controls; let i = index">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row" [formGroupName]="i">
+                                <div class="col-md-12 mb-3">
+                                    <button type="button" class="btn btn-danger btn-sm" *ngIf="orderDetailForm.get('id')?.value" (click)="removeOrderDetails(orderDetailForm.get('id')?.value)">Remove</button>
+                                    <button class="btn btn-danger btn-sm" *ngIf="!orderDetailForm.get('id')?.value" (click)="removeOrderDetailsIndex(i)">Remove</button>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="lineNo" class="form-label">Line No</label>
+                                    <input type="number" class="form-control" id="lineNo" formControlName="lineNo">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="productId" class="form-label">Product</label>
+                                    <select class="form-control" id="productId" formControlName="productId" (change)="updateProductPrice(i)">
+                                        <option *ngFor="let product of products" [value]="product.id">
+                                            {{ product.name }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="quantity" class="form-label">Quantity</label>
+                                    <input type="number" class="form-control" id="quantity" formControlName="quantity" (keyup)="updateTotalPrice(i)">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="taxAmount" class="form-label">Tax Amount</label>
+                                    <input type="number" class="form-control" id="taxAmount" formControlName="taxAmount" (keyup)="updateTotalPrice(i)">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="price" class="form-label">Price</label>
+                                    <input type="number" class="form-control" id="price" formControlName="price" readonly>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="totalPrice" class="form-label">Total Price</label>
+                                    <input type="number" class="form-control" id="totalPrice" formControlName="totalPrice" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+            <button type="button" (click)="addOrderDetails()" class="btn btn-success btn-sm">New order details</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,23 @@
+<form [formGroup]="productForm" (ngSubmit)="productForm.valid && ProductFormSubmition()">
+    <div class="row justify-content-center my-3">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="col mb-3">
+                        <label class="form-label" for="name">Name</label>
+                        <input class="form-control" id="name" formControlName="name">
+                    </div>
+                    <div class="col mb-3">
+                        <label class="form-label" for="description">Description</label>
+                        <input class="form-control" id="description" formControlName="description">
+                    </div>
+                    <div class="col mb-3">
+                        <label class="form-label" for="price">Price</label>
+                        <input type="number" class="form-control" id="price" formControlName="price" min="1" >
+                    </div>
+                    <button class="btn btn-success btn-sm" [disabled]="productForm.invalid" type="submit">Submit</button>
+                </div>
+            </div>
+        </div>        
+    </div>
+</form>
